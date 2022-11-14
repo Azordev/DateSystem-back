@@ -4,7 +4,6 @@ const clienteRouter = express.Router();
 const getAcces = require("../utils/acces");
 
 
-
 /**
  * raiz route of client
  */
@@ -106,11 +105,6 @@ clienteRouter.route("/cliente/:id")
                 next(err);
             })
     });
-
-
-
-
-    
 
 /**
  * route for the client login
