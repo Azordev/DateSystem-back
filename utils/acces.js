@@ -21,6 +21,7 @@ const getAcces = async (req, res, next) => {
                         req.params.adminId = result.id;
                         next();
                     } else if (err) {
+                        console.log(err);
                         res.status(401).json({ auth: false, message: "debes logearte nuevamente, no tienes acceso" });
                     }
                 })

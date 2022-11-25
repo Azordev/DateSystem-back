@@ -33,8 +33,6 @@ class CitasControllerClass {
         })
     };
 
-
-
     /**
      * this method is for get All citas of the database (mongoDB Atlas)
      * @returns all citas of database if this exist
@@ -58,24 +56,25 @@ class CitasControllerClass {
         })
     }
 
-
-
     /**
      * this method is for create one cita on the database (mongoDB Atlas)
      * @param {*} motivo 
      * @param {*} clientId
      * @param {} date_of_cita
+     * @param {*} desde_hora
+     * @param {*} hasta_hora
+     * @param {} date_of_cita
      * @returns the cita created
      */
-    createCita(motivo, clientId, date_of_cita) {
+    createCita(motivo, desde, hasta, status, clientId) {
         LogInfo("[CREATE CITA]: motivo of cita is " + motivo);
-        LogInfo("[CREATE CITA]: date of cita is " + date_of_cita);
         LogInfo("[CREATE CITA]:  clientId of cita is " + clientId);
+        console.log(motivo, desde, hasta, status, clientId)
         return new Promise((resolve, reject) => {
-            if (motivo, clientId, date_of_cita) {
+            if (motivo, desde, hasta, status, clientId) {
                 clienteModel.findById({_id:clientId})
                 .then(responseOfClient=>{
-                    citaModel.create({motivo:motivo, cliente:clientId, date:date_of_cita})
+                    citaModel.create({motivo:motivo,desde:desde,hasta:hasta,status:status?status:"espera",cliente:clientId})
                     .then(result=>{
                         const new_citas=responseOfClient.citas.concat(result._id);
                         clienteModel.findByIdAndUpdate({_id:clientId},{citas:new_citas})
@@ -99,7 +98,7 @@ class CitasControllerClass {
                 })
             } else {
                 LogError("[CREATE CITA]:motivo or name or clientId or date_of_cita are null");
-                reject({ status: 406, data: { message: " or name or clientId or date_of_cita are null" } });
+                reject({ status: 406, data: { message: " or motivo or clientId or date_of_cita are null" } });
             };
         })
     };
@@ -145,7 +144,7 @@ class CitasControllerClass {
             citaModel.findByIdAndDelete({ _id: id }, { rawResult: true })
                 .then((result) => {
                     LogSuccess("[DELETE CITA]: response of delete cita perfect");
-                    resolve({ status: 200, data: { message: "cita eliminado correctamente", cita: result._id } });
+                    resolve({status: 200, data:{ message:"cita eliminada correctamente", cita: result._id } });
                 })
                 .catch((err) => {
                     LogError("[DELETE CITA]:error of delete cita");
@@ -154,6 +153,23 @@ class CitasControllerClass {
         })
     };
 
+    /**
+     * this method is for delete all citas on the database (mongoDB Atlas)
+     * @returns the cita eliminated
+     */
+         deleteAllCitas() {
+            return new Promise((resolve, reject) => {
+                citaModel.deleteMany({})
+                    .then((result) => {
+                        LogSuccess("[DELETE ALL CITA]: response of delete all citas perfect");
+                        resolve({ status: 200, data: { message: "citas eliminadas correctamente"} });
+                    })
+                    .catch((err) => {
+                        LogError("[DELETE ALL CITA]:error of delete all citas");
+                        reject({ status: 502, data: err });
+                    });
+            })
+        };
 }
 
 

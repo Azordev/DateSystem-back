@@ -7,8 +7,12 @@ const citaSchema = new Schema({
     min: 5,
     required: true,
   },
-  date: {
-    type: Date,
+  desde:{
+    type:Date,
+    require:true
+  },
+  hasta:{
+    type:Date,
     require:true
   },
   status:{
@@ -29,7 +33,6 @@ citaSchema.set("toJSON", {
     ret.id = ret._id
     delete ret._id
     delete ret.__v
-    delete password
   }
 })
 

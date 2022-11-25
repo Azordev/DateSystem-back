@@ -1,5 +1,5 @@
 const express = require("express");
-const { getClient, createClient, updateClient, deleteClient, getAllClient, loginClient } = require("../controllers/clientes");
+const { getClient, createClient, updateClient, deleteClient, getAllClient, loginClient, deleteAllClient} = require("../controllers/clientes");
 const clienteRouter = express.Router();
 const getAcces = require("../utils/acces");
 
@@ -22,14 +22,28 @@ clienteRouter.route("/")
         }
     })
 
+    .delete(getAcces, async (req, res, next) => {
+        if (req.params.rol == "admin") {
+            deleteAllClient()
+                .then(response => {
+                     res.status(response.status).json(response);
+                })
+                .catch(err => {
+                    next(err);
+                })
+        } else {
+            res.status(401).send({ message: "acceso denegado" })
+        }
+    })
+
 
 /**
  * route for register one client
  */
 clienteRouter.route("/register")
     .post(async (req, res, next) => {
-        const { name, last_name, email, password } = req.body;
-        createClient(name, last_name, email, password)
+        const { name, last_name, email,telefono,direccion,password } = req.body;
+        createClient(name, last_name, email,telefono,direccion,password)
             .then(response => {
                  res.status(response.status).json(response);
             })

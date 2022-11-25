@@ -2,14 +2,20 @@ const { Schema } = require("mongoose");
 
 const calendarioSchema = new Schema({
   fechas_citadas: [{
-    type: Date,
-    max: 50,
-    min: 5,
+    desde:{
+      type: Date
+    },
+    hasta:{
+      type: Date
+    }
   }],
   fechas_bloqueadas:[{
-    type: Date,
-    max: 25,
-    min: 5,
+    desde:{
+      type: Date
+    },
+    hasta:{
+      type: Date
+    }
   }],
 })
 
@@ -18,7 +24,6 @@ calendarioSchema.set("toJSON", {
     ret.id = ret._id
     delete ret._id
     delete ret.__v
-    delete password
   }
 })
 

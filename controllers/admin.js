@@ -18,7 +18,7 @@ class AdminControllerClass {
                     .then((result) => {
                         if (result === null || result === {}) {
                             LogInfo("[GET ADMIN]: response when get admin is '{}`");
-                            resolve({ status: 200, data: { message: "El usuario no existe" } });
+                            resolve({ status: 400, data: { message: "El usuario no existe" } });
                         } else {
                             LogSuccess("[GET ADMIN]: response of geted admin perfect")
                             resolve({ status: 200, data: result });
@@ -65,16 +65,18 @@ class AdminControllerClass {
      * @param {*} password 
      * @returns the admin created
      */
-    createAdmin(name, last_name, email, password) {
+    createAdmin(name, last_name, email,telefono,ubicacion,password) {
         LogInfo("[CREATE ADMIN]: name admin is " + name);
         LogInfo("[CREATE ADMIN]: last name admin is " + last_name);
         LogInfo("[CREATE ADMIN]: email admin is " + email);
+        LogInfo("[CREATE ADMIN]: telefono admin is " + telefono);
+        LogInfo("[CREATE ADMIN]: ubicacion admin is " + ubicacion);
         LogInfo("[CREATE ADMIN]: password admin is " + password);
         return new Promise((resolve, reject) => {
             if (name && last_name && email && password) {
                 encriptarPassword(password)
                     .then((passwordEncripted) => {
-                        adminModel.create({ name: name, last_name: last_name, email: email, password: passwordEncripted })
+                        adminModel.create({ name: name, last_name: last_name, email: email,telefono:telefono,ubicacion:ubicacion,password: passwordEncripted })
                             .then((result) => {
                                 LogSuccess("[CREATE ADMIN]: response of created admin perfect");
                                 resolve({ status: 201, data: { resgisted: true, message: "registrado correctamente", adminId: result.id } });
@@ -191,7 +193,6 @@ class AdminControllerClass {
             };
         })
     };
-
 }
 
 const adminController = new AdminControllerClass();
