@@ -60,21 +60,23 @@ class CitasControllerClass {
      * this method is for create one cita on the database (mongoDB Atlas)
      * @param {*} motivo 
      * @param {*} clientId
-     * @param {} date_of_cita
+     * @param {*} date_of_cita
      * @param {*} desde_hora
      * @param {*} hasta_hora
-     * @param {} date_of_cita
+     * @param {*} costo
+     * @param {*} moneda
+     * @param {*} date_of_cita
      * @returns the cita created
      */
-    createCita(motivo, desde, hasta, status, clientId) {
+    createCita(motivo, desde, hasta,costo,moneda,status, clientId) {
         LogInfo("[CREATE CITA]: motivo of cita is " + motivo);
         LogInfo("[CREATE CITA]:  clientId of cita is " + clientId);
-        console.log(motivo, desde, hasta, status, clientId)
+        console.log(motivo, desde, hasta, costo, moneda, status, clientId)
         return new Promise((resolve, reject) => {
-            if (motivo, desde, hasta, status, clientId) {
+            if (motivo, desde, hasta, costo, moneda, status, clientId) {
                 clienteModel.findById({_id:clientId})
                 .then(responseOfClient=>{
-                    citaModel.create({motivo:motivo,desde:desde,hasta:hasta,status:status?status:"espera",cliente:clientId})
+                    citaModel.create({motivo:motivo,desde:desde,hasta:hasta,costo:costo,moneda:moneda,status:status?status:"espera",cliente:clientId})
                     .then(result=>{
                         const new_citas=responseOfClient.citas.concat(result._id);
                         clienteModel.findByIdAndUpdate({_id:clientId},{citas:new_citas})

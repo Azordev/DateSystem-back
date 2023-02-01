@@ -15,6 +15,15 @@ const citaSchema = new Schema({
     type:Date,
     require:true
   },
+  costo:{
+    type: String,
+    max: 25,
+    min: 5,
+    default:"PESO"
+  },
+  moneda:{
+    type: Number
+  },
   status:{
     type: String,
     max: 25,

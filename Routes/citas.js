@@ -38,10 +38,10 @@ citaRouter.route("/")
 
 
     .post(getAcces, async (req, res, next) => {
-        const { motivo,desde,hasta,status,clientId} = req.body;
+        const { motivo,desde,hasta,costo,moneda,status,clientId} = req.body;
         const clientId2 = clientId?clientId:req.params.clientId;
         const status2=status?status:null;
-        createCita(motivo, desde, hasta,status2,clientId2)
+        createCita(motivo, desde, hasta,costo,moneda,status2,clientId2)
             .then(response => {
                 res.status(response.status).json(response);
             })
