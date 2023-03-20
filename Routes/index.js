@@ -3,9 +3,8 @@ const { LogInfo } = require("../utils/logger");
 const clienteRouter=require("./clientes");
 const citaRouter=require("./citas");
 const calendarioRouter=require("./calendario");
+const indicacionesRouter=require("./indicaciones");
 const adminRouter=require("./admin");
-
-
 
 const server=express();
 const root = express.Router();
@@ -20,6 +19,6 @@ server.use("/clientes",clienteRouter);
 server.use("/citas",citaRouter);
 server.use("/calendarios",calendarioRouter);
 server.use("/admins",adminRouter);
-
+server.use("/indicaciones",indicacionesRouter);
 
 module.exports=server;

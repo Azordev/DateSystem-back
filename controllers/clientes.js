@@ -2,10 +2,8 @@ const jwt = require("jsonwebtoken");
 const citaModel = require("../database/models/citas");
 const clienteModel = require("../database/models/clientes");
 const calendarioModel = require("../database/models/calendario");
-const adminModel = require("../database/models/admin");
 const { encriptarPassword, comparePassword } = require("../utils/bcryptManager");
 const { LogError, LogSuccess, LogInfo } = require("../utils/logger");
-const { deleteDateCalendario } = require("./calendario");
 
 
 class clientControllerClass {

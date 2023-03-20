@@ -33,6 +33,10 @@ const clienteSchema = new Schema({
   citas: [{
     type: Schema.Types.ObjectId,
     ref:"citas"
+  }],
+  indicaciones: [{
+    type: Schema.Types.ObjectId,
+    ref:"indicaciones"
   }]
 })
 
