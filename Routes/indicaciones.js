@@ -1,15 +1,14 @@
 const express = require("express");
-const citaRouter = express.Router();
+const indicacionesRouter = express.Router();
 const { getOneIndicacion, createIndication, updateIndication, deleteIndication, getAllIndicaciones, deleteAllIndications } = require("../controllers/indicaciones")
 const getAcces = require("../utils/acces");
 
 /**
  * raiz route of indicaciones
  */
-citaRouter.route("/")
+indicacionesRouter.route("/")
     .get(getAcces, async (req, res, next) => {
         console.log(req.params.rol);
-        if (req.params.rol == "admin") {
             getAllIndicaciones()
                 .then(response => {
                     res.status(response.status).json(response);
@@ -17,9 +16,6 @@ citaRouter.route("/")
                 .catch(err => {
                     next(err);
                 })
-        } else {
-            res.status(401).send({ message: "acceso denegado" })
-        }
     })
 
     .delete(getAcces, async (req, res, next) => {
@@ -53,7 +49,7 @@ citaRouter.route("/")
 /**
  * route for individual indication
  */
-citaRouter.route("/indicacion/:id")
+indicacionesRouter.route("/indicacion/:id")
     .get(getAcces, async (req, res, next) => {
         const { id } = req.params;
         getOneIndicacion(id)
@@ -88,4 +84,4 @@ citaRouter.route("/indicacion/:id")
             })
     });
 
-module.exports = citaRouter;
+module.exports = indicacionesRouter;
